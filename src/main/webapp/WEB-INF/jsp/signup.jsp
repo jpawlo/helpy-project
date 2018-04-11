@@ -6,7 +6,7 @@
 	<title>Sign up | Helpy</title>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-	<link rel="icon" href="/img/helpy logo.png">	
+	<link rel="icon" href="/img/LG_Logo_White.png">	
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 	<link rel="stylesheet" href="/css/signUp.css">
@@ -27,7 +27,7 @@
 				<div id="confirmationText" class="overlayContent" style="display:none; margin-top:10%;">
 					<h1 style="z-index:100; color:white;">Please check your Email used in creating <span style="font-family:Ubuntu; font-weight:bolder; font-size:120%; letter-spacing:-3px;">help<span style="color:#428bca;">y</span></span> account</h1>
 					<br><br>
-					<a class="backToHome text-primary" style="text-decoration:none;">Back to home</a>
+					<a class="backToHome text-primary" href="/" style="text-decoration:none;">Back to home</a>
 				</div>
 			</center>
 		</div>
@@ -56,7 +56,7 @@
 	<section name="navigationBar">
 		<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
 			<div class="d-flex flex-row">
-				  <a class="navbar-brand" href="index.html">
+				  <a class="navbar-brand" href="/">
 					<img src="/img/helpy logo alternate.png" class="navigationBarImage" width="15%" height="auto" alt="Helpy Logo">
 				  </a>
 				  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation" style="border:none;">
@@ -67,7 +67,7 @@
 		  <div class="collapse navbar-collapse" id="navbarSupportedContent">
 			<ul class="navbar-nav ml-auto">
 			  <li class="nav-item">
-				<a class="nav-link" href="index.html">Home </a>
+				<a class="nav-link" href="/">Home </a>
 			  </li>
 			</ul>
 		  </div>
@@ -88,6 +88,7 @@
 					<center>
 						<input type="text" class="form-control mb-2" placeholder="Name" name="name" id="userName" required maxlength=50 minlength=5 data-container="body" data-toggle="popover" data-placement="right" data-content="">
 						<input type="email" class="form-control mb-2" placeholder="Email Address" id="emailAddress" name="email_address" required minlength=2 data-container="body" data-toggle="popover" data-placement="right" data-content="">
+						<input type="text" class="form-control mb-2" placeholder="fb.com/YourUserName" id="socialMediaAcct" name="social_media" required minlength=2 data-container="body" data-toggle="popover" data-placement="right" data-content="">
 						<input type="number" class="form-control mb-2" placeholder="ID Number(optional)" name="id_number" minlength=5 maxlength=12>
 				 		<div class="input-group mb-2" id="telephoneNumber">
 							<div class="input-group-prepend">
@@ -96,7 +97,8 @@
 							<input type="tel" class="form-control" placeholder="Phone Number" aria-describedly="phPhone" id="phoneNumber" name="phone_number" minlength=9 maxlength=10 required data-container="body" data-toggle="popover" data-placement="right" data-content="">
 						</div> 
 						<input type="password" class="form-control mb-4" placeholder="Password" id="passWord" name="password" required minlength=8 maxlength=20>
-						<div class="input-group mb-3">
+						
+		<!-- 				<div class="input-group mb-3"> -->
 
 						<div class="alert alert-danger alertMessage text-danger" role="alert">
 							
