@@ -9,27 +9,24 @@ import java.util.Arrays;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import com.helpy.demo.dao.*;
+import com.helpy.demo.repository.UserInformation;
 
 
-
+@Service
 public class UserService {
 
-	Connection con=db_conn.getConnection();
-
+	@Autowired
+	private UserInformation updateInfo;
 	
 	
-	public void GetUserInformationByEmail(String email){
-		try{
-			PreparedStatement ps = con.prepareStatement("UPDATE user_client SET status=true WHERE email = ?");
-			ps.setString(1,email);
-			ps.executeUpdate();
-		}
-		catch(Exception e){
-			System.out.println("GetUserInformationByEmail: "+e);
-		}
-	
+	public void GetUserInformationByEmail(String user_id){
+		System.out.println("USER ID USERSERVICE CLASS: "+user_id);
+		String status = "1";
+		updateInfo.updateUserStatus(status,user_id);
 	}
+	
 	
 }

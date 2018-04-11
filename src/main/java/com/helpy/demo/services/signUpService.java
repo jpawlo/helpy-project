@@ -2,6 +2,8 @@ package com.helpy.demo.services;
 
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.DateFormat;
@@ -16,6 +18,7 @@ import javax.mail.internet.MimeMessage;
 
 import org.apache.jasper.tagplugins.jstl.core.ForEach;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.ResultSetExtractor;
@@ -28,6 +31,9 @@ import com.helpy.demo.dao.User;
 import com.helpy.demo.dao.verificationCode;
 import com.helpy.demo.repository.EmailVerification;
 import com.helpy.demo.repository.HelpyRepository;
+import com.helpy.demo.repository.UserInformation;
+
+
 
 @Service
 public class signUpService {
@@ -36,8 +42,8 @@ public class signUpService {
 	private HelpyRepository rep;
 	@Autowired
 	private EmailVerification rep_email;
-	
-	private JdbcTemplate jdbc;
+	@Autowired
+	private UserInformation rep_user;
 	private JavaMailSender send;
 	@Autowired
 	public signUpService(JavaMailSender javaMailSender){
@@ -47,6 +53,7 @@ public class signUpService {
 	public void addUserToDb(List<User> user){
 		rep.save(user);
 	}
+
 	
 	public String hashedMD5Password(String user){  
 		String hashed = "";
@@ -68,7 +75,7 @@ public class signUpService {
 		
 	}
 
-	public void sendEmail(String email_address){
+	public void sendEmail(String email_address,String user_id){
 		
 		try{
 			String verificationCode = new keyGenerator().generateVerificationKey(25);
@@ -89,9 +96,9 @@ public class signUpService {
 								"<div style='background-color:#343a40!important; font-family:Verdana; padding-top:2%; box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23); width:100%;'>"+
 									"<p style='margin-top:6%;font-weight:bolder; font-size:600%; font-family:Ubuntu; letter-spacing:-3px; color:white;'>help<span style='color:#428bca;'>y</span></p>"+
 									"<h3 style='padding:5%; color:white; margin:5%; margin-top:-10%; margin-bottom:0%;'><span style='color:#428bca'>Activate</span> your <span style='color:#428bca'>account</span> by clicking the button below</h3>"+
-									"<form action='http://localhost:8080/verify/user/account' method='POST'>"+
+									"<form action='http://helpyme.com/verify/user/account' method='POST'>"+
 										"<input type='hidden' name='verificationCode' value='"+verificationCode+"' >"+
-										"<input type='hidden' name='emailAddress' value='"+email_address+"'>"+
+										"<input type='hidden' name='emailAddress' value='"+user_id+"'>"+
 										"<button type='submit' style='font-size:200%;font-weight:bolder; border:.5px solid white; border-radius:10px; padding:2%; margin:2%; margin-top:0%; color:#343a40!important; background-color:white;'>"+
 												"Activate <span style='font-family:Ubuntu; font-size:110%;'>Help<span style='color:#428bca'>y</span></span>"+
 										"</button>"+
@@ -100,8 +107,8 @@ public class signUpService {
 						"</div>";
 			helper.setTo(email_address);
 			helper.setText(html,true);
-			helper.setSubject("Helpy Website Sample");
-			helper.setFrom("tppdevs22@gmail.com");
+			helper.setSubject("Helpy");
+			helper.setFrom("helpymec@helpyme.com");
 			send.send(message);
 			
 		}catch(Exception e){
@@ -109,7 +116,26 @@ public class signUpService {
 		}
 	}
 	public boolean validateEmailAddress(String code){
-		return rep_email.exists(code);
+		boolean res = false;
+		List<verificationCode> as= rep_email.getByCode(code);
+		if(as.isEmpty()) {
+			res = false;
+		}else {
+			res = true;
+			rep_email.delete(code);
+			res = true;
+		}
+		return res;
+	}
+	
+	public boolean validateEmailOnSignUp(String email){
+		List<User> user = new ArrayList<>();
+		user = rep_user.getByEmail(email);
+		if(user.isEmpty()) {
+			return false;
+		}else {
+			return true;
+		}
 	}
 	
 	
